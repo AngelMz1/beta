@@ -45,7 +45,7 @@ sudo apt install python3 python3-pip
 ## 📊 Tabla de Variables y Nomenclatura
 
 | Tipo de Variable | Nomenclatura | Ejemplo | Descripción |
-|------------------|--------------|---------|-------------|
+| :--- | :--- | :--- | :--- |
 | **Entero** | `snake_case` | `edad_usuario = 25` | Números enteros |
 | **Flotante** | `snake_case` | `precio_producto = 19.99` | Números decimales |
 | **Cadena** | `snake_case` | `nombre_completo = "Juan"` | Texto |
