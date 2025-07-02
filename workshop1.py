@@ -79,7 +79,7 @@ while next:
     employee += 1
     save_client(fullName, idNumber, age, movilPhone, address, customerStatus, income, expenses, balance, employee)
     ans = input("Do you want to add another customer? \n"
-    "Press [y] to add or any other key to exit...").lower()
+    "Press [y] to add or any other key to continue...").lower()
     if ans != "y":
         next = False
 
@@ -92,4 +92,6 @@ print("Id - Name - Id Number - Age - Movil Phone - Address - Client Status - Inc
 
 for value in allCustomers.values():
     print(f"{value['Id']} - {value['Name']} - {value['Id Number']} - {value['Age']} - {value['Movil Phone']} - {value['Address']} - {value['Client Status']} - {value['Income']} - {value['Expenses']} - {value['Balance']}\n")
+
+input("End of report, press enter to exit")
 

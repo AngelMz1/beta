@@ -1,44 +1,36 @@
-# Script description:
 '''
-1.Get 2 numbers (float or int)
-2.Show main menu (1). add, (2). sub, (3). mul, (4). div
-3.Select option
-4.Create a function to get the result according with the option
-5.Clear screen
+description:
+get name player
+generate two random numbers into 2 dices
+dice 1: 1-6
+dice 2: 1-6
+print dices value
+if dice 1 and dice 2 is pair print YOU WIN else print YOU LOSE
 '''
 import os
+from random import randint
+#####################################
+#functions
+#####################################
 
-def calc(x, y, z):
-    if z > '5' or z < '1':
-        ans = "Invalid option"
-    elif z == '1':
-        ans = x + y
-    elif z == '2':
-        ans = x - y
-    elif z == '3':
-        ans = x * y
-    elif z == '4':
-        if y == 0:
-            ans = "Invalid operation"
-        else:
-            ans = x / y
+def get_dices():
+    dice1 = randint(1,6)
+    dice2 = randint(1,6)
+    return dice1, dice2
+def get_result(x, y):
+    if x % 2 == 0  and y % 2 == 0:
+        result = "YOU WIN"
     else:
-        ans = x + y, x - y, x * y, x / y
-    return ans
-   
+        result = "YOU LOSE"
+    return result
 os.system("clear")
-####### main ###########
-num1 = float(input("Press first number: "))
-num2 = float(input("Press second number: "))
 
-print("::: Main menu :::")
-print("[1]. Add [2]. Sub [3]. Mul [4]. Div [5]. All")
+print("::: Welcome to the game :::")
+print(f"Hello your dices are")
 
-operation = input("Select an option: ")
+dice1, dice2 = get_dices()
+result = get_result(dice1, dice2)
 
-res = calc(num1, num2, operation)
-if operation == '5':
-    print(f"The addition is: {res[0]} \n The subtraction is: {res[1]} \n The multiplication is: {res[2]} \n The division is: {res[3]}")
-else:
-    print(f"The result is: {res}")
 
+print(f"Dice 1: {dice1} Dice 2: {dice2}")
+print(result)
