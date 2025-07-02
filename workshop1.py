@@ -88,10 +88,10 @@ while next:
 os.system("clear") 
 
 print("::: Report generator :::")
-print("Id - Name - Id Number - Age - Movil Phone - Address - Client Status - Income - Expenses - Balance")
+print("::: Customers list :::")
 
 for value in allCustomers.values():
-    print(f"{value['Id']} - {value['Name']} - {value['Id Number']} - {value['Age']} - {value['Movil Phone']} - {value['Address']} - {value['Client Status']} - {value['Income']} - {value['Expenses']} - {value['Balance']}\n")
+    print(f"Customer: {value['Id']} \n Name: {value['Name']} \n Id Number: {value['Id Number']} \n Age: {value['Age']} \n Movil Phone: {value['Movil Phone']} \n Address: {value['Address']} \n Client Status: {value['Client Status']} \n Income: {value['Income']} \n Expenses: {value['Expenses']} \n Balance: {value['Balance']} \n")
 
 input("End of report, press enter to exit")
 
