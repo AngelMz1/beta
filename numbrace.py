@@ -29,9 +29,13 @@ def roll_dices():
 
 def valid_players(x, y):
     while True:
-        usrInput = int(input(x))
-        if usrInput in y:
-            return usrInput
+        usrInput = input(x)
+        if usrInput.isdigit():
+            numInput = int(usrInput)
+            if numInput in y:
+                return numInput
+            else:
+                print("Please enter a valid option")
         else:
             print("Please enter a valid option")
 
@@ -42,17 +46,21 @@ def create_players(x):
 
 def set_difficulty(x,y):
     while True:
-        usrInput = int(input(x))
-        if usrInput in y:
-            if usrInput == 1:
-                goal = 20
-            elif usrInput == 2:
-                goal = 30
-            elif usrInput == 3:
-                goal = 50
-            elif usrInput == 4:
-                goal = 100
-        return goal
+        uInput = input(x)
+        if uInput.isdigit():
+            usrInput = int(uInput)
+            if usrInput in y:
+                if usrInput == 1:
+                    goal = 20
+                elif usrInput == 2:
+                    goal = 30
+                elif usrInput == 3:
+                    goal = 50
+                elif usrInput == 4:
+                    goal = 100
+            return goal
+        else:
+            print("Please enter a valid option")
 
 def progress_bar(x):
     for _ in tqdm(range(x),desc="Loading positions",unit="s"):
@@ -61,15 +69,49 @@ def progress_bar(x):
 def print_player(x):
     return "\n".join([f"{key}\t{value}" for key, value in x.items()])
     
+def main_screen():
+    print(f'''.::: Numerical Race :::.
+Game difficulty: {levels} positions.
+Players      Position
+{print_player(players)}
+''')
 
+# def bonus_1_pair():
+#     if (d1 + d2) % 2 == 0:
+
+
+def in_game(x,y):
+    gameOver = False
+    while not gameOver:
+        for player in x:
+            os.system("clear")
+            main_screen()
+            if x[player] >= y:
+                print(f"{player} is the winner")
+                input("Press enter to exit...")
+                break
+
+            input(f"{player}, it's your turn!\nPress enter to roll")
+            d1, d2 = roll_dices() 
+            progres = d1 + d2
+            x[player] += progres
+            print(f"Dice 1: {d1}\nDice 2: {d2}\nGreat, advances {progres} positions")
+            input("Press enter to next player")
+            
+            if x[player] >= y:
+                os.system("clear")
+                main_screen()
+                print(f"{player} is the winner")
+                gameOver = True
+                break
+            
 
 #### main ####
 
 players = {}
 
 print(".::: Numerical Race :::.")
-nplayers = valid_players("Multiplayer(2-4)\nEnter the number of players: ",[2,3,4])
-create_players(nplayers)
+nplayers = create_players(valid_players("Multiplayer(2-4)\nEnter the number of players: ",[2,3,4]))
 
 os.system("clear")
 
@@ -89,28 +131,16 @@ progress_bar(levels)
 input("Everything ready. Press enter to start game")
 os.system("clear")
 
-displayPrompt=f'''.::: Numerical Race :::.
-Game difficulty: {levels} positions.
-Players      Position
-{print_player(players)}
-'''
-print(displayPrompt)
-while True:
-    finish = [player for player, value in players.items() if value >= levels]
-    if finish:
-        print(f"{'y'.join(finish)} is the winner")
-        break
 
+
+in_game(players, levels)
+
+restart = input("Do you want to restart the game? y/n").lower()
+if restart == "y":
     for player in players:
-        if players[player] < levels:
-            d1, d2 = roll_dices() 
-            progres = d1 + d2
-            players[player] += progres
-            print(f"Dice 1: {d1}\nDice 2: {d2}")
-            input("Press enter to next player")
-            os.system("clear")
-            print(displayPrompt)
-        
-    print(displayPrompt)
-    print(players)
+        players[player] = 0
+    
+
+
+
         
