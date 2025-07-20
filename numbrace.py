@@ -16,8 +16,6 @@ si el jugador obtiene 3 pares consecutivos gada la partida
 #### imports ####
 import os
 from random import randint
-import time
-from tqdm import tqdm
 
 os.system("clear")
 
@@ -62,10 +60,6 @@ def set_difficulty(x,y):
         else:
             print("Please enter a valid option")
 
-def progress_bar(x):
-    for _ in tqdm(range(x),desc="Loading positions",unit="s"):
-        time.sleep(0.06)
-
 def print_player(x):
     return "\n".join([f"{key}\t{value}" for key, value in x.items()])
     
@@ -76,8 +70,34 @@ Players      Position
 {print_player(players)}
 ''')
 
-# def bonus_1_pair():
-#     if (d1 + d2) % 2 == 0:
+def restart(x, y):
+    while True:
+        usrInput = input(x).lower()
+        if usrInput in y:
+            return usrInput
+        else:
+            print("Please enter a valid option.")
+
+def bonus_dices():
+    totalProgres = 0
+    bonus = 0
+    while True:
+        d1, d2 = roll_dices()
+        progres = d1 + d2
+        totalProgres += progres
+        input("Press enter to roll dices")
+        print(f"Dice 1: {d1}, Dice 2: {d2}.")
+
+        if d1 == d2:
+            bonus += 1
+            print("Great, you can throw again.")
+        elif bonus == 3:
+            print("Congratulations, you have won after getting three consecutive pairs.")
+            return bonus
+        else:
+            break
+    print(f"Great, you advanced {totalProgres} positions.")
+    return totalProgres
 
 
 def in_game(x,y):
@@ -90,12 +110,14 @@ def in_game(x,y):
                 print(f"{player} is the winner")
                 input("Press enter to exit...")
                 break
+            print(f"{player} is your turn...")
+            progres = bonus_dices()
+            bonus = 0
+            if bonus == 3:
+                x[player] = y
+                break
 
-            input(f"{player}, it's your turn!\nPress enter to roll")
-            d1, d2 = roll_dices() 
-            progres = d1 + d2
             x[player] += progres
-            print(f"Dice 1: {d1}\nDice 2: {d2}\nGreat, advances {progres} positions")
             input("Press enter to next player")
             
             if x[player] >= y:
@@ -127,18 +149,23 @@ enter your option (1-4): '''
 
 levels = set_difficulty(difficultyPrompt,[1,2,3,4])
 
-progress_bar(levels)
 input("Everything ready. Press enter to start game")
 os.system("clear")
 
 
 
-in_game(players, levels)
 
-restart = input("Do you want to restart the game? y/n").lower()
-if restart == "y":
-    for player in players:
-        players[player] = 0
+restartGame = "y"
+while restartGame == "y":
+    in_game(players, levels)
+
+    restartGame = restart("Do you want to restart the game? y/n: ",["y","n"])
+
+    if restartGame == "n":
+        break
+    else:
+        for player in players:
+            players[player] = 0
     
 
 
