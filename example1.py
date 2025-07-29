@@ -19,3 +19,8 @@ print (type(d5))
 print (type(d6))
 print (type(d7))
 print (type(d2))
+x, y, z = 1, 2, 3
+print (x)
+print (y)
+
+print (z)
